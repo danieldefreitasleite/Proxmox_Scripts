@@ -88,19 +88,6 @@ $STD apt-get install -y apt-transport-https
 $STD apt-get install -y software-properties-common
 msg_ok "Installed Dependencies"
 
-if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
-  msg_info "Setting Up Hardware Acceleration"
-  $STD apt-get -y install \
-    va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd
-
-  /bin/chgrp video /dev/dri
-  /bin/chmod 755 /dev/dri
-  /bin/chmod 660 /dev/dri/*
-  msg_ok "Set Up Hardware Acceleration"
-fi
-
 msg_info "Setting Up Jellyfin Repository"
 $STD add-apt-repository universe -y
 $STD apt-key add <(curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key)
